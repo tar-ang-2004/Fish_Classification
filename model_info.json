@@ -1,0 +1,47 @@
+{
+  "class_labels": [
+    "animal fish",
+    "animal fish bass",
+    "fish sea_food black_sea_sprat",
+    "fish sea_food gilt_head_bream",
+    "fish sea_food hourse_mackerel",
+    "fish sea_food red_mullet",
+    "fish sea_food red_sea_bream",
+    "fish sea_food sea_bass",
+    "fish sea_food shrimp",
+    "fish sea_food striped_red_mullet",
+    "fish sea_food trout"
+  ],
+  "num_classes": 11,
+  "image_height": 224,
+  "image_width": 224,
+  "model_type": "Custom CNN",
+  "test_accuracy": 0.9921556322560402,
+  "framework": "PyTorch",
+  "class_to_idx": {
+    "animal fish": 0,
+    "animal fish bass": 1,
+    "fish sea_food black_sea_sprat": 2,
+    "fish sea_food gilt_head_bream": 3,
+    "fish sea_food hourse_mackerel": 4,
+    "fish sea_food red_mullet": 5,
+    "fish sea_food red_sea_bream": 6,
+    "fish sea_food sea_bass": 7,
+    "fish sea_food shrimp": 8,
+    "fish sea_food striped_red_mullet": 9,
+    "fish sea_food trout": 10
+  },
+  "idx_to_class": {
+    "0": "animal fish",
+    "1": "animal fish bass",
+    "2": "fish sea_food black_sea_sprat",
+    "3": "fish sea_food gilt_head_bream",
+    "4": "fish sea_food hourse_mackerel",
+    "5": "fish sea_food red_mullet",
+    "6": "fish sea_food red_sea_bream",
+    "7": "fish sea_food sea_bass",
+    "8": "fish sea_food shrimp",
+    "9": "fish sea_food striped_red_mullet",
+    "10": "fish sea_food trout"
+  }
+}

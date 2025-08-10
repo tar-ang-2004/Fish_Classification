@@ -1,0 +1,318 @@
+{% extends "base.html" %}
+
+{% block title %}Classification Result - Fish Classifier{% endblock %}
+
+{% block content %}
+<div class="container-fluid hero-section">
+    <div class="row justify-content-center">
+        <div class="col-lg-11 col-xl-10">
+            <!-- Back Navigation -->
+            <div class="mb-4">
+                <a href="{{ url_for('index') }}" class="btn btn-glass">
+                    <i class="fas fa-arrow-left me-2"></i>
+                    Upload Another Image
+                </a>
+            </div>
+
+            <!-- Main Result Card -->
+            <div class="glass-card mb-4">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold mb-2">
+                        <i class="fas fa-brain me-2 text-primary"></i>
+                        Classification Complete
+                    </h2>
+                    <p class="text-muted">AI-powered fish species identification</p>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Image Section -->
+                    <div class="col-lg-6">
+                        <div class="text-center">
+                            <h5 class="fw-semibold mb-3">
+                                <i class="fas fa-image me-2 text-primary"></i>
+                                Your Uploaded Image
+                            </h5>
+                            <div class="uploaded-image-container position-relative">
+                                <img src="{{ result.image_data }}" class="img-fluid rounded-3 shadow-lg" alt="Uploaded fish" style="max-height: 450px; border-radius: 16px;">
+                                <div class="image-overlay">
+                                    <div class="overlay-content">
+                                        <i class="fas fa-search-plus fs-4"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results Section -->
+                    <div class="col-lg-6">
+                        <h5 class="fw-semibold mb-3">
+                            <i class="fas fa-chart-bar me-2 text-primary"></i>
+                            Analysis Results
+                        </h5>
+
+                        <!-- Top Prediction Card -->
+                        {% set confidence_level = result.percentage %}
+                        {% if confidence_level >= 90 %}
+                            {% set confidence_class = "success" %}
+                            {% set confidence_text = "Excellent" %}
+                            {% set confidence_icon = "check-circle" %}
+                        {% elif confidence_level >= 75 %}
+                            {% set confidence_class = "primary" %}
+                            {% set confidence_text = "High" %}
+                            {% set confidence_icon = "thumbs-up" %}
+                        {% elif confidence_level >= 60 %}
+                            {% set confidence_class = "warning" %}
+                            {% set confidence_text = "Moderate" %}
+                            {% set confidence_icon = "exclamation-circle" %}
+                        {% else %}
+                            {% set confidence_class = "error" %}
+                            {% set confidence_text = "Low" %}
+                            {% set confidence_icon = "question-circle" %}
+                        {% endif %}
+
+                        <div class="alert-modern alert-{{ confidence_class }} mb-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-1">
+                                        <i class="fas fa-crown me-2"></i>
+                                        {{ result.predicted_class.replace('_', ' ').title() }}
+                                    </h6>
+                                    <small>Confidence: {{ confidence_text }} ({{ "%.1f"|format(result.percentage) }}%)</small>
+                                </div>
+                                <div class="confidence-badge">
+                                    <i class="fas fa-{{ confidence_icon }}"></i>
+                                </div>
+                            </div>
+                            <div class="progress-modern mt-3">
+                                <div class="progress-bar-modern" style="width: {{ result.percentage }}%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Confidence Interpretation -->
+                        <div class="info-card mb-4">
+                            <div class="d-flex align-items-center">
+                                <div class="info-icon me-3">
+                                    <i class="fas fa-{{ confidence_icon }}"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1">{{ confidence_text }} Confidence</h6>
+                                    <p class="mb-0 text-muted small">
+                                        {% if confidence_level >= 90 %}
+                                            The model is very confident in this prediction. Excellent match!
+                                        {% elif confidence_level >= 75 %}
+                                            The model is quite confident in this prediction.
+                                        {% elif confidence_level >= 60 %}
+                                            The model has moderate confidence. Consider alternative predictions.
+                                        {% else %}
+                                            The model has low confidence. Image might be unclear or show an uncommon species.
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- All Predictions -->
+                        <h6 class="fw-semibold mb-3">
+                            <i class="fas fa-list-ol me-2"></i>
+                            Complete Analysis
+                        </h6>
+                        
+                        {% for prediction in result.top_predictions %}
+                        <div class="prediction-card {% if loop.first %}top-prediction{% endif %} mb-3 fade-in" style="animation-delay: {{ loop.index0 * 0.1 }}s;">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center">
+                                    <div class="rank-badge me-3">#{{ prediction.rank }}</div>
+                                    <div>
+                                        <h6 class="mb-0 fw-semibold">{{ prediction.class.replace('_', ' ').title() }}</h6>
+                                        <small class="text-muted">Species Classification</small>
+                                    </div>
+                                </div>
+                                <div class="confidence-score">
+                                    <span class="badge {% if loop.first %}bg-success{% else %}bg-secondary{% endif %} fs-6">
+                                        {{ "%.1f"|format(prediction.percentage) }}%
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="progress-modern">
+                                <div class="progress-bar-modern" style="width: {{ prediction.percentage }}%; animation-delay: {{ loop.index0 * 0.2 }}s;"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Model Information Dashboard -->
+            {% if model_info %}
+            <div class="glass-card mb-4">
+                <h5 class="fw-semibold mb-4 text-center">
+                    <i class="fas fa-cogs me-2 text-primary"></i>
+                    Model Information
+                </h5>
+                <div class="row g-4">
+                    <div class="col-md-3">
+                        <div class="info-card text-center h-100">
+                            <div class="info-icon mb-3 mx-auto">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <h6 class="fw-semibold">{{ model_info.model_type }}</h6>
+                            <small class="text-muted">Architecture</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="info-card text-center h-100">
+                            <div class="info-icon mb-3 mx-auto">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h6 class="fw-semibold">{{ (model_info.test_accuracy * 100) | round(1) }}%</h6>
+                            <small class="text-muted">Accuracy</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="info-card text-center h-100">
+                            <div class="info-icon mb-3 mx-auto">
+                                <i class="fas fa-fish"></i>
+                            </div>
+                            <h6 class="fw-semibold">{{ model_info.num_classes }}</h6>
+                            <small class="text-muted">Species</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="info-card text-center h-100">
+                            <div class="info-icon mb-3 mx-auto">
+                                <i class="fab fa-python"></i>
+                            </div>
+                            <h6 class="fw-semibold">PyTorch</h6>
+                            <small class="text-muted">Framework</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Action Buttons -->
+            <div class="text-center mb-4">
+                <a href="{{ url_for('index') }}" class="btn btn-modern me-3">
+                    <i class="fas fa-upload me-2"></i>
+                    Classify Another Image
+                </a>
+                <a href="{{ url_for('about') }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Learn More About AI
+                </a>
+            </div>
+
+            <!-- Disclaimer -->
+            <div class="alert-modern alert-info">
+                <div class="d-flex align-items-start">
+                    <i class="fas fa-info-circle me-3 fs-5 mt-1"></i>
+                    <div>
+                        <h6 class="mb-1">Important Disclaimer</h6>
+                        <p class="mb-0">This AI model provides predictions based on training data. For scientific research or commercial purposes, please consult with marine biology experts for accurate species identification.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .uploaded-image-container {
+        position: relative;
+        overflow: hidden;
+        border-radius: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .uploaded-image-container:hover {
+        transform: scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .uploaded-image-container:hover .image-overlay {
+        opacity: 1;
+    }
+
+    .overlay-content {
+        color: white;
+        text-align: center;
+    }
+
+    .confidence-badge {
+        width: 40px;
+        height: 40px;
+        background: var(--gradient-1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+    }
+
+    .rank-badge {
+        width: 32px;
+        height: 32px;
+        background: var(--gradient-1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 0.875rem;
+    }
+
+    .confidence-score .badge {
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+    }
+
+    .top-prediction {
+        border: 2px solid var(--success);
+        box-shadow: 0 5px 15px rgba(var(--success-rgb), 0.3);
+    }
+
+    .prediction-card {
+        background: var(--glass);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1rem;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+
+    .prediction-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .info-icon {
+        width: 50px;
+        height: 50px;
+        background: var(--gradient-1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.25rem;
+    }
+</style>
+{% endblock %}

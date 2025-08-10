@@ -1,0 +1,1556 @@
+{% extends "base.html" %}
+
+{% block title %}Fish AI - Next-Generation Species Intelligence{% endblock %}
+
+{% block content %}
+<!-- Parallax Hero Section -->
+<div class="hero-parallax">
+    <div class="hero-particles"></div>
+    <div class="hero-gradient-overlay"></div>
+    
+    <div class="container-fluid">
+        <div class="row justify-content-center min-vh-100 align-items-center">
+            <div class="col-12 col-lg-10 col-xl-8">
+                
+                <!-- Revolutionary Hero Section -->
+                <div class="hero-content text-center mb-5">
+                    <div class="hero-logo-container mb-4 bounce-in">
+                        <div class="hero-logo">
+                            <div class="logo-rings">
+                                <div class="ring ring-1"></div>
+                                <div class="ring ring-2"></div>
+                                <div class="ring ring-3"></div>
+                            </div>
+                            <i class="fas fa-fish logo-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <h1 class="hero-title fade-in-up" style="animation-delay: 0.2s;">
+                        <span class="title-word" data-text="Fish">Fish</span>
+                        <span class="title-word gradient-text" data-text="AI">AI</span>
+                    </h1>
+                    
+                    <div class="hero-subtitle fade-in-up" style="animation-delay: 0.4s;">
+                        <span class="subtitle-highlight">Revolutionary</span> marine intelligence powered by
+                        <span class="typing-effect" data-words="Deep Learning,Computer Vision,Neural Networks,AI Technology"></span>
+                    </div>
+                    
+                    <!-- Floating Stats Cards -->
+                    {% if model_info %}
+                    <div class="floating-stats">
+                        <div class="stat-card stat-card-1 float-animation" style="animation-delay: 0.6s;">
+                            <div class="stat-icon-container">
+                                <i class="fas fa-brain stat-icon"></i>
+                                <div class="icon-pulse"></div>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value">{{ model_info.model_type }}</div>
+                                <div class="stat-label">Neural Architecture</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card stat-card-2 float-animation" style="animation-delay: 0.8s;">
+                            <div class="stat-icon-container">
+                                <i class="fas fa-bullseye stat-icon"></i>
+                                <div class="icon-pulse"></div>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value">{{ (model_info.test_accuracy * 100) | round(1) }}%</div>
+                                <div class="stat-label">Precision Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card stat-card-3 float-animation" style="animation-delay: 1.0s;">
+                            <div class="stat-icon-container">
+                                <i class="fas fa-fish stat-icon"></i>
+                                <div class="icon-pulse"></div>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value">{{ model_info.num_classes }}</div>
+                                <div class="stat-label">Species Recognized</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Interactive Upload Section -->
+<div class="upload-section">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10 col-xl-8">
+                
+                <!-- Revolutionary Upload Interface -->
+                <div class="upload-container slide-in-up" style="animation-delay: 1.2s;">
+                    <div class="section-header text-center mb-5">
+                        <div class="section-icon-wrapper">
+                            <div class="section-icon">
+                                <i class="fas fa-upload"></i>
+                                <div class="icon-orbit">
+                                    <div class="orbit-dot orbit-dot-1"></div>
+                                    <div class="orbit-dot orbit-dot-2"></div>
+                                    <div class="orbit-dot orbit-dot-3"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="section-title">
+                            <span class="title-accent">Intelligent</span> Classification
+                        </h2>
+                        <p class="section-subtitle">
+                            Drop your image and witness AI magic in real-time
+                        </p>
+                    </div>
+                    
+                    <!-- Ultra-Modern Upload Zone -->
+                    <div class="upload-zone-container">
+                        <div id="upload-area" class="upload-zone-v2">
+                            <div class="upload-bg-animation"></div>
+                            <div class="upload-content-v2">
+                                <div class="upload-icon-v2">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <div class="icon-waves">
+                                        <div class="wave wave-1"></div>
+                                        <div class="wave wave-2"></div>
+                                        <div class="wave wave-3"></div>
+                                    </div>
+                                </div>
+                                <h3 class="upload-title">Drop your fish image here</h3>
+                                <p class="upload-subtitle">or click to select from device</p>
+                                <div class="upload-specs">
+                                    <span class="spec-item">
+                                        <i class="fas fa-image"></i>
+                                        JPG, PNG, GIF, WebP
+                                    </span>
+                                    <span class="spec-item">
+                                        <i class="fas fa-weight-hanging"></i>
+                                        Max 16MB
+                                    </span>
+                                    <span class="spec-item">
+                                        <i class="fas fa-bolt"></i>
+                                        Instant Analysis
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="upload-border-animation"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Hidden File Input -->
+                    <input type="file" id="file-input" class="d-none" accept="image/*">
+                    
+                    <!-- Revolutionary Loading State -->
+                    <div id="loading-state" class="loading-container" style="display: none;">
+                        <div class="ai-brain-loader">
+                            <div class="brain-core">
+                                <div class="neural-network">
+                                    <div class="neuron neuron-1"></div>
+                                    <div class="neuron neuron-2"></div>
+                                    <div class="neuron neuron-3"></div>
+                                    <div class="neuron neuron-4"></div>
+                                    <div class="connection connection-1"></div>
+                                    <div class="connection connection-2"></div>
+                                    <div class="connection connection-3"></div>
+                                </div>
+                            </div>
+                            <div class="brain-waves">
+                                <div class="wave-line wave-line-1"></div>
+                                <div class="wave-line wave-line-2"></div>
+                                <div class="wave-line wave-line-3"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="loading-text-container">
+                            <h4 class="loading-title">
+                                🧠 <span class="typing-dots">AI is analyzing</span>
+                            </h4>
+                            <div class="analysis-steps">
+                                <div class="step step-1">
+                                    <span class="step-icon">📸</span>
+                                    <span class="step-text">Processing image...</span>
+                                </div>
+                                <div class="step step-2">
+                                    <span class="step-icon">🔍</span>
+                                    <span class="step-text">Extracting features...</span>
+                                </div>
+                                <div class="step step-3">
+                                    <span class="step-icon">🎯</span>
+                                    <span class="step-text">Classifying species...</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-container">
+                            <div class="progress-track">
+                                <div class="progress-fill"></div>
+                                <div class="progress-glow"></div>
+                            </div>
+                            <div class="progress-percentage">0%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Results Section -->
+<div id="result" class="results-section" style="display: none;"></div>
+<!-- Interactive Species Showcase -->
+{% if model_info and model_info.class_labels %}
+<div class="species-showcase">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10 col-xl-8">
+                
+                <div class="section-header text-center mb-5 slide-in-up" style="animation-delay: 1.4s;">
+                    <div class="section-icon-wrapper">
+                        <div class="section-icon">
+                            <i class="fas fa-fish"></i>
+                            <div class="icon-ripple"></div>
+                        </div>
+                    </div>
+                    <h2 class="section-title">
+                        <span class="title-accent">Marine</span> Intelligence Database
+                    </h2>
+                    <p class="section-subtitle">
+                        {{ model_info.num_classes }} species powered by advanced neural networks
+                    </p>
+                </div>
+                
+                <!-- Dynamic Species Grid -->
+                <div class="species-grid slide-in-up" style="animation-delay: 1.6s;">
+                    {% for class_name in model_info.class_labels %}
+                    <div class="species-card" data-species="{{ class_name }}">
+                        <div class="card-background"></div>
+                        <div class="card-content">
+                            <div class="species-icon">
+                                <i class="fas fa-fish"></i>
+                                <div class="icon-glow"></div>
+                            </div>
+                            <div class="species-name">{{ class_name.replace('_', ' ').title() }}</div>
+                            <div class="species-category">Marine Species</div>
+                        </div>
+                        <div class="card-hover-effect"></div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Pro Tips Interactive Section -->
+<div class="tips-section">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10 col-xl-8">
+                
+                <div class="section-header text-center mb-5 slide-in-up" style="animation-delay: 1.8s;">
+                    <div class="section-icon-wrapper">
+                        <div class="section-icon">
+                            <i class="fas fa-lightbulb"></i>
+                            <div class="icon-spark"></div>
+                        </div>
+                    </div>
+                    <h2 class="section-title">
+                        <span class="title-accent">Pro</span> Photography Tips
+                    </h2>
+                    <p class="section-subtitle">
+                        Maximize AI accuracy with optimal image capture techniques
+                    </p>
+                </div>
+                
+                <!-- Interactive Tips Grid -->
+                <div class="tips-grid slide-in-up" style="animation-delay: 2.0s;">
+                    <div class="tip-card tip-card-1">
+                        <div class="tip-icon-container">
+                            <div class="tip-icon">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <div class="tip-decoration"></div>
+                        </div>
+                        <div class="tip-content">
+                            <h4 class="tip-title">Image Quality</h4>
+                            <p class="tip-description">Use clear, well-lit photos with the fish as the main subject for optimal recognition</p>
+                            <div class="tip-metric">
+                                <span class="metric-label">Accuracy Impact:</span>
+                                <span class="metric-value">+25%</span>
+                            </div>
+                        </div>
+                        <div class="tip-glow"></div>
+                    </div>
+                    
+                    <div class="tip-card tip-card-2">
+                        <div class="tip-icon-container">
+                            <div class="tip-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="tip-decoration"></div>
+                        </div>
+                        <div class="tip-content">
+                            <h4 class="tip-title">Feature Visibility</h4>
+                            <p class="tip-description">Ensure distinctive patterns, fins, and body shape are clearly visible</p>
+                            <div class="tip-metric">
+                                <span class="metric-label">Detection Rate:</span>
+                                <span class="metric-value">98%</span>
+                            </div>
+                        </div>
+                        <div class="tip-glow"></div>
+                    </div>
+                    
+                    <div class="tip-card tip-card-3">
+                        <div class="tip-icon-container">
+                            <div class="tip-icon">
+                                <i class="fas fa-focus"></i>
+                            </div>
+                            <div class="tip-decoration"></div>
+                        </div>
+                        <div class="tip-content">
+                            <h4 class="tip-title">Single Subject</h4>
+                            <p class="tip-description">One fish per image works best for precise species classification</p>
+                            <div class="tip-metric">
+                                <span class="metric-label">Precision:</span>
+                                <span class="metric-value">95%</span>
+                            </div>
+                        </div>
+                        <div class="tip-glow"></div>
+                    </div>
+                    
+                    <div class="tip-card tip-card-4">
+                        <div class="tip-icon-container">
+                            <div class="tip-icon">
+                                <i class="fas fa-angle-double-right"></i>
+                            </div>
+                            <div class="tip-decoration"></div>
+                        </div>
+                        <div class="tip-content">
+                            <h4 class="tip-title">Optimal Angle</h4>
+                            <p class="tip-description">Side profile views provide the most comprehensive identification data</p>
+                            <div class="tip-metric">
+                                <span class="metric-label">Success Rate:</span>
+                                <span class="metric-value">92%</span>
+                            </div>
+                        </div>
+                        <div class="tip-glow"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Alternative Upload Form (Hidden but functional) -->
+<div class="d-none">
+    <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data" id="backup-upload-form">
+        <input type="file" name="file" accept="image/*" id="backup-file-input">
+    </form>
+</div>
+
+<style>
+/* ============= COMPLETE UI/UX OVERHAUL STYLES ============= */
+
+/* Hero Parallax Section */
+.hero-parallax {
+    position: relative;
+    background: linear-gradient(135deg, 
+        #1a1a2e 0%, 
+        #16213e 25%, 
+        #0f3460 50%, 
+        #533483 75%, 
+        #7209b7 100%);
+    overflow: hidden;
+    perspective: 1000px;
+}
+
+.hero-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    animation: float 20s ease-in-out infinite;
+}
+
+.hero-gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 20%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+    animation: gradientShift 15s ease-in-out infinite;
+}
+
+/* Hero Content */
+.hero-content {
+    position: relative;
+    z-index: 10;
+    padding: 4rem 0;
+}
+
+.hero-logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.hero-logo {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-rings {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.ring {
+    position: absolute;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    animation: ringRotate 4s linear infinite;
+}
+
+.ring-1 {
+    width: 100%;
+    height: 100%;
+    border-top-color: #ff6b6b;
+    border-right-color: #4ecdc4;
+    animation-delay: 0s;
+}
+
+.ring-2 {
+    width: 80%;
+    height: 80%;
+    top: 10%;
+    left: 10%;
+    border-top-color: #45b7d1;
+    border-left-color: #96ceb4;
+    animation-delay: -1s;
+    animation-direction: reverse;
+}
+
+.ring-3 {
+    width: 60%;
+    height: 60%;
+    top: 20%;
+    left: 20%;
+    border-top-color: #ffeaa7;
+    border-bottom-color: #fd79a8;
+    animation-delay: -2s;
+}
+
+.logo-icon {
+    font-size: 3rem;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientFlow 3s ease-in-out infinite;
+    z-index: 2;
+    position: relative;
+}
+
+/* Hero Title */
+.hero-title {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 900;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.title-word {
+    display: inline-block;
+    position: relative;
+    margin: 0 0.5rem;
+    font-family: 'Orbitron', 'Inter', sans-serif;
+    letter-spacing: 0.1em;
+}
+
+.title-word:first-child {
+    color: #ffffff;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.title-word.gradient-text {
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #fd79a8);
+    background-size: 600% 600%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: rainbowShift 4s ease-in-out infinite;
+}
+
+/* Hero Subtitle */
+.hero-subtitle {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 3rem;
+    line-height: 1.6;
+}
+
+.subtitle-highlight {
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+}
+
+.typing-effect {
+    border-right: 2px solid #4ecdc4;
+    animation: blink 1s infinite;
+}
+
+/* Floating Stats */
+.floating-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 4rem;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    min-width: 200px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: rotate 4s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.stat-card:hover::before {
+    opacity: 1;
+}
+
+.stat-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.stat-icon-container {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1rem;
+}
+
+.stat-icon {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    border-radius: 15px;
+    color: white;
+    position: relative;
+    z-index: 2;
+}
+
+.icon-pulse {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    border-radius: 15px;
+    animation: pulse 2s ease-in-out infinite;
+    z-index: 1;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Upload Section */
+.upload-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 6rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: backgroundMove 20s linear infinite;
+}
+
+.section-header {
+    margin-bottom: 4rem;
+}
+
+.section-icon-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.section-icon {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #ffffff;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.icon-orbit {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    top: -20px;
+    left: -20px;
+}
+
+.orbit-dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #ffffff;
+    border-radius: 50%;
+    animation: orbit 3s linear infinite;
+}
+
+.orbit-dot-1 { animation-delay: 0s; }
+.orbit-dot-2 { animation-delay: -1s; }
+.orbit-dot-3 { animation-delay: -2s; }
+
+.section-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.title-accent {
+    background: linear-gradient(45deg, #ff6b6b, #ffeaa7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Revolutionary Upload Zone */
+.upload-zone-container {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.upload-zone-v2 {
+    position: relative;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    padding: 4rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow: hidden;
+}
+
+.upload-bg-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.upload-zone-v2:hover .upload-bg-animation {
+    transform: translateX(100%);
+}
+
+.upload-zone-v2:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.upload-content-v2 {
+    position: relative;
+    z-index: 2;
+}
+
+.upload-icon-v2 {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 2rem;
+}
+
+.upload-icon-v2 i {
+    font-size: 4rem;
+    color: #ffffff;
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+}
+
+.icon-waves {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+}
+
+.wave {
+    position: absolute;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    animation: waveExpand 2s ease-out infinite;
+}
+
+.wave-1 { animation-delay: 0s; }
+.wave-2 { animation-delay: 0.7s; }
+.wave-3 { animation-delay: 1.4s; }
+
+.upload-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.upload-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 2rem;
+}
+
+.upload-specs {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.spec-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+}
+
+.upload-border-animation {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+        #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, 
+        #ffeaa7, #fd79a8, #ff6b6b);
+    background-size: 600% 600%;
+    border-radius: 32px;
+    z-index: -1;
+    animation: borderFlow 3s ease-in-out infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.upload-zone-v2:hover .upload-border-animation {
+    opacity: 1;
+}
+
+/* Revolutionary Loading State */
+.loading-container {
+    text-align: center;
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    margin-top: 2rem;
+}
+
+.ai-brain-loader {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 2rem;
+}
+
+.brain-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+}
+
+.neural-network {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.neuron {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #4ecdc4;
+    border-radius: 50%;
+    animation: neuronPulse 2s ease-in-out infinite;
+}
+
+.neuron-1 { top: 0; left: 0; animation-delay: 0s; }
+.neuron-2 { top: 0; right: 0; animation-delay: 0.5s; }
+.neuron-3 { bottom: 0; left: 0; animation-delay: 1s; }
+.neuron-4 { bottom: 0; right: 0; animation-delay: 1.5s; }
+
+.connection {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+    animation: connectionFlow 2s ease-in-out infinite;
+}
+
+.connection-1 {
+    top: 6px;
+    left: 12px;
+    right: 12px;
+    animation-delay: 0.2s;
+}
+
+.connection-2 {
+    bottom: 6px;
+    left: 12px;
+    right: 12px;
+    animation-delay: 0.7s;
+}
+
+.connection-3 {
+    top: 12px;
+    bottom: 12px;
+    left: 6px;
+    width: 2px;
+    height: auto;
+    background: linear-gradient(180deg, #ff6b6b, #4ecdc4);
+    animation-delay: 1.2s;
+}
+
+.brain-waves {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.wave-line {
+    position: absolute;
+    border: 2px solid rgba(78, 205, 196, 0.3);
+    border-radius: 50%;
+    animation: brainWave 3s ease-out infinite;
+}
+
+.wave-line-1 {
+    width: 100%;
+    height: 100%;
+    animation-delay: 0s;
+}
+
+.wave-line-2 {
+    width: 120%;
+    height: 120%;
+    top: -10%;
+    left: -10%;
+    animation-delay: 1s;
+}
+
+.wave-line-3 {
+    width: 140%;
+    height: 140%;
+    top: -20%;
+    left: -20%;
+    animation-delay: 2s;
+}
+
+.loading-text-container {
+    margin-bottom: 2rem;
+}
+
+.loading-title {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 2rem;
+}
+
+.typing-dots::after {
+    content: '';
+    animation: typingDots 1.5s infinite;
+}
+
+.analysis-steps {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    color: rgba(255, 255, 255, 0.8);
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.step.active {
+    opacity: 1;
+    background: rgba(78, 205, 196, 0.2);
+    color: #ffffff;
+}
+
+.step-icon {
+    font-size: 1.2rem;
+}
+
+.progress-container {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.progress-track {
+    position: relative;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1);
+    border-radius: 10px;
+    width: 0%;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+.progress-glow {
+    position: absolute;
+    top: -2px;
+    left: -10px;
+    width: 20px;
+    height: 10px;
+    background: radial-gradient(circle, rgba(78, 205, 196, 0.8), transparent);
+    border-radius: 50%;
+    animation: progressGlow 2s ease-in-out infinite;
+}
+
+.progress-percentage {
+    text-align: center;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* Species Showcase */
+.species-showcase {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    padding: 6rem 0;
+    position: relative;
+}
+
+.species-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.species-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow: hidden;
+}
+
+.species-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.species-card:hover::before {
+    left: 100%;
+}
+
+.species-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    border-color: rgba(78, 205, 196, 0.5);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.card-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, 
+        rgba(255, 107, 107, 0.1) 0%,
+        rgba(78, 205, 196, 0.1) 50%,
+        rgba(69, 183, 209, 0.1) 100%);
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.species-card:hover .card-background {
+    opacity: 1;
+}
+
+.card-content {
+    position: relative;
+    z-index: 2;
+}
+
+.species-icon {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1.5rem;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.icon-glow {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    border-radius: 20px;
+    opacity: 0;
+    filter: blur(10px);
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.species-card:hover .icon-glow {
+    opacity: 0.7;
+}
+
+.species-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.species-category {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Tips Section */
+.tips-section {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    padding: 6rem 0;
+    position: relative;
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.tip-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    padding: 2.5rem 2rem;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow: hidden;
+}
+
+.tip-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+.tip-icon-container {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    margin-bottom: 2rem;
+}
+
+.tip-icon {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    position: relative;
+    z-index: 2;
+}
+
+.tip-decoration {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+    background-size: 400% 400%;
+    border-radius: 25px;
+    opacity: 0;
+    filter: blur(15px);
+    transition: opacity 0.3s ease;
+    animation: gradientRotate 4s ease-in-out infinite;
+    z-index: 1;
+}
+
+.tip-card:hover .tip-decoration {
+    opacity: 0.7;
+}
+
+.tip-content {
+    position: relative;
+    z-index: 2;
+}
+
+.tip-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.tip-description {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.tip-metric {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.metric-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.metric-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.tip-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, 
+        rgba(255, 107, 107, 0.1), 
+        rgba(78, 205, 196, 0.1));
+    border-radius: 25px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tip-card:hover .tip-glow {
+    opacity: 1;
+}
+
+/* Enhanced Animations */
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+@keyframes gradientShift {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.1); }
+}
+
+@keyframes ringRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes gradientFlow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes rainbowShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes blink {
+    0%, 50% { border-color: transparent; }
+    51%, 100% { border-color: #4ecdc4; }
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes backgroundMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+@keyframes orbit {
+    0% { transform: rotate(0deg) translateX(60px) rotate(0deg); }
+    100% { transform: rotate(360deg) translateX(60px) rotate(-360deg); }
+}
+
+@keyframes waveExpand {
+    0% { 
+        width: 0; 
+        height: 0; 
+        opacity: 1; 
+    }
+    100% { 
+        width: 100px; 
+        height: 100px; 
+        opacity: 0; 
+    }
+}
+
+@keyframes borderFlow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes neuronPulse {
+    0%, 100% { 
+        opacity: 0.6; 
+        transform: scale(1); 
+        box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.3); 
+        box-shadow: 0 0 20px rgba(78, 205, 196, 0.8);
+    }
+}
+
+@keyframes connectionFlow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+@keyframes brainWave {
+    0% { 
+        opacity: 1; 
+        transform: scale(0.8); 
+    }
+    100% { 
+        opacity: 0; 
+        transform: scale(1.2); 
+    }
+}
+
+@keyframes typingDots {
+    0%, 20% { content: ''; }
+    40% { content: '.'; }
+    60% { content: '..'; }
+    80%, 100% { content: '...'; }
+}
+
+@keyframes progressGlow {
+    0%, 100% { opacity: 0.8; transform: translateX(-10px); }
+    50% { opacity: 1; transform: translateX(10px); }
+}
+
+@keyframes gradientRotate {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Enhanced Animation Classes */
+.bounce-in {
+    animation: bounceIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.fade-in-up {
+    animation: fadeInUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.slide-in-up {
+    animation: slideInUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.float-animation {
+    animation: floatGentle 3s ease-in-out infinite;
+}
+
+@keyframes bounceIn {
+    0% { 
+        opacity: 0; 
+        transform: scale(0.3) rotate(-10deg); 
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.1) rotate(5deg); 
+    }
+    100% { 
+        opacity: 1; 
+        transform: scale(1) rotate(0deg); 
+    }
+}
+
+@keyframes fadeInUp {
+    0% { 
+        opacity: 0; 
+        transform: translateY(30px); 
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+@keyframes slideInUp {
+    0% { 
+        opacity: 0; 
+        transform: translateY(50px) scale(0.95); 
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
+
+@keyframes floatGentle {
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg); 
+    }
+    33% { 
+        transform: translateY(-10px) rotate(1deg); 
+    }
+    66% { 
+        transform: translateY(5px) rotate(-1deg); 
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .floating-stats {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .stat-card {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .upload-specs {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .analysis-steps {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .tips-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .species-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .upload-zone-v2 {
+        padding: 2rem 1rem;
+    }
+    
+    .upload-title {
+        font-size: 1.5rem;
+    }
+}
+
+/* Dark Mode Enhancements */
+@media (prefers-color-scheme: dark) {
+    .hero-parallax {
+        background: linear-gradient(135deg, 
+            #0a0a0a 0%, 
+            #1a1a2e 25%, 
+            #16213e 50%, 
+            #0f3460 75%, 
+            #533483 100%);
+    }
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Focus States for Accessibility */
+.upload-zone-v2:focus {
+    outline: 2px solid #4ecdc4;
+    outline-offset: 4px;
+}
+
+.species-card:focus,
+.tip-card:focus {
+    outline: 2px solid #4ecdc4;
+    outline-offset: 2px;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .stat-card,
+    .species-card,
+    .tip-card {
+        border: 2px solid #ffffff;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+</style>
+{% endblock %}

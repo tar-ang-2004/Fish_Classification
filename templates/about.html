@@ -1,0 +1,630 @@
+{% extends "base.html" %}
+
+{% block title %}About - Fish Classification Project{% endblock %}
+
+{% block content %}
+<div class="container-fluid hero-section">
+    <div class="row justify-content-center">
+        <div class="col-lg-11 col-xl-10">
+            <!-- Header Section -->
+            <div class="text-center mb-5">
+                <div class="hero-icon mb-4">
+                    <i class="fas fa-fish"></i>
+                </div>
+                <h1 class="display-4 fw-bold mb-3 gradient-text">About Fish Classifier</h1>
+                <p class="lead text-muted fs-5">
+                    Discover the science and technology behind our AI-powered fish species identification system
+                </p>
+            </div>
+
+            <!-- Project Overview -->
+            <div class="glass-card mb-5">
+                <div class="text-center mb-4">
+                    <h3 class="fw-bold">
+                        <i class="fas fa-lightbulb me-2 text-primary"></i>
+                        Project Vision
+                    </h3>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-8 mx-auto">
+                        <p class="fs-5 text-center mb-4">
+                            This Fish Classification project represents the convergence of artificial intelligence and marine biology, 
+                            creating an accessible tool for fish species identification that serves researchers, educators, and enthusiasts alike.
+                        </p>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="info-card text-center h-100">
+                                    <div class="info-icon mb-3 mx-auto">
+                                        <i class="fas fa-microscope"></i>
+                                    </div>
+                                    <h6 class="fw-semibold">Research</h6>
+                                    <small class="text-muted">Supporting marine biology research</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info-card text-center h-100">
+                                    <div class="info-icon mb-3 mx-auto">
+                                        <i class="fas fa-graduation-cap"></i>
+                                    </div>
+                                    <h6 class="fw-semibold">Education</h6>
+                                    <small class="text-muted">Interactive learning tool</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info-card text-center h-100">
+                                    <div class="info-icon mb-3 mx-auto">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <h6 class="fw-semibold">Community</h6>
+                                    <small class="text-muted">Accessible to everyone</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Architecture -->
+            <div class="row g-4 mb-5">
+                <div class="col-lg-6">
+                    <div class="glass-card h-100">
+                        <h5 class="fw-semibold mb-4">
+                            <i class="fas fa-brain me-2 text-primary"></i>
+                            AI Architecture
+                        </h5>
+                        {% if model_info %}
+                        <div class="feature-list">
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-layer-group"></i>
+                                </div>
+                                <div>
+                                    <strong>Model Type:</strong> {{ model_info.model_type }}
+                                    <small class="d-block text-muted">Deep neural network architecture</small>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-target"></i>
+                                </div>
+                                <div>
+                                    <strong>Accuracy:</strong> {{ (model_info.test_accuracy * 100) | round(1) }}%
+                                    <small class="d-block text-muted">Validated on test dataset</small>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-fish"></i>
+                                </div>
+                                <div>
+                                    <strong>Species:</strong> {{ model_info.num_classes }} classifications
+                                    <small class="d-block text-muted">Diverse marine species coverage</small>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                                <div>
+                                    <strong>Input:</strong> {{ model_info.image_width }}×{{ model_info.image_height }} pixels
+                                    <small class="d-block text-muted">Optimized image processing</small>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="alert-modern alert-warning">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            Model information currently unavailable
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="glass-card h-100">
+                        <h5 class="fw-semibold mb-4">
+                            <i class="fas fa-code me-2 text-primary"></i>
+                            Technology Stack
+                        </h5>
+                        <div class="tech-stack">
+                            <div class="tech-item">
+                                <div class="tech-icon python">
+                                    <i class="fab fa-python"></i>
+                                </div>
+                                <div>
+                                    <strong>Python 3.8+</strong>
+                                    <small class="d-block text-muted">Core programming language</small>
+                                </div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-icon pytorch">
+                                    <i class="fas fa-fire"></i>
+                                </div>
+                                <div>
+                                    <strong>PyTorch</strong>
+                                    <small class="d-block text-muted">Deep learning framework</small>
+                                </div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-icon flask">
+                                    <i class="fas fa-flask"></i>
+                                </div>
+                                <div>
+                                    <strong>Flask</strong>
+                                    <small class="d-block text-muted">Web application framework</small>
+                                </div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-icon bootstrap">
+                                    <i class="fab fa-bootstrap"></i>
+                                </div>
+                                <div>
+                                    <strong>Bootstrap 5</strong>
+                                    <small class="d-block text-muted">Modern UI framework</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Features -->
+            <div class="glass-card mb-5">
+                <h3 class="fw-bold text-center mb-4">
+                    <i class="fas fa-star me-2 text-primary"></i>
+                    Key Features
+                </h3>
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="feature-card text-center h-100">
+                            <div class="feature-card-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h6 class="fw-semibold">Real-time Analysis</h6>
+                            <p class="text-muted small mb-0">Instant fish species identification with lightning-fast processing</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="feature-card text-center h-100">
+                            <div class="feature-card-icon">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <h6 class="fw-semibold">High Precision</h6>
+                            <p class="text-muted small mb-0">Advanced CNN architecture delivers exceptional accuracy rates</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="feature-card text-center h-100">
+                            <div class="feature-card-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h6 class="fw-semibold">Confidence Scoring</h6>
+                            <p class="text-muted small mb-0">Transparent prediction confidence with detailed probability analysis</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="feature-card text-center h-100">
+                            <div class="feature-card-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <h6 class="fw-semibold">Universal Access</h6>
+                            <p class="text-muted small mb-0">Responsive design works seamlessly across all devices</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fish Species Grid -->
+            {% if model_info and model_info.class_labels %}
+            <div class="glass-card mb-5">
+                <h3 class="fw-bold text-center mb-4">
+                    <i class="fas fa-fish me-2 text-primary"></i>
+                    Supported Species ({{ model_info.num_classes }})
+                </h3>
+                <p class="text-center text-muted mb-4">
+                    Our AI model recognizes these marine species with exceptional accuracy
+                </p>
+                <div class="species-grid">
+                    {% for class_name in model_info.class_labels %}
+                    <div class="species-chip">
+                        <i class="fas fa-fish me-2"></i>
+                        {{ class_name.replace('_', ' ').title() }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- How It Works Process -->
+            <div class="glass-card mb-5">
+                <h3 class="fw-bold text-center mb-4">
+                    <i class="fas fa-cogs me-2 text-primary"></i>
+                    How It Works
+                </h3>
+                <div class="process-timeline">
+                    <div class="process-step">
+                        <div class="process-number">1</div>
+                        <div class="process-content">
+                            <div class="process-icon">
+                                <i class="fas fa-upload"></i>
+                            </div>
+                            <h6 class="fw-semibold">Upload Image</h6>
+                            <p class="text-muted small mb-0">Upload a clear image of your fish using our intuitive drag-and-drop interface</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">2</div>
+                        <div class="process-content">
+                            <div class="process-icon">
+                                <i class="fas fa-adjust"></i>
+                            </div>
+                            <h6 class="fw-semibold">Preprocessing</h6>
+                            <p class="text-muted small mb-0">Image is automatically resized, normalized, and optimized for neural network analysis</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">3</div>
+                        <div class="process-content">
+                            <div class="process-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h6 class="fw-semibold">AI Analysis</h6>
+                            <p class="text-muted small mb-0">Deep neural network extracts features and patterns unique to each species</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">4</div>
+                        <div class="process-content">
+                            <div class="process-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <h6 class="fw-semibold">Results</h6>
+                            <p class="text-muted small mb-0">Receive detailed predictions with confidence scores and alternative classifications</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Metrics -->
+            {% if model_info %}
+            <div class="glass-card mb-5">
+                <h3 class="fw-bold text-center mb-4">
+                    <i class="fas fa-trophy me-2 text-primary"></i>
+                    Performance Metrics
+                </h3>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="metric-card success">
+                            <div class="metric-icon">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <div class="metric-value">{{ (model_info.test_accuracy * 100) | round(1) }}%</div>
+                            <div class="metric-label">Test Accuracy</div>
+                            <div class="metric-description">Validated performance on unseen data</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="metric-card primary">
+                            <div class="metric-icon">
+                                <i class="fas fa-fish"></i>
+                            </div>
+                            <div class="metric-value">{{ model_info.num_classes }}</div>
+                            <div class="metric-label">Species Coverage</div>
+                            <div class="metric-description">Distinct fish species recognized</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="metric-card info">
+                            <div class="metric-icon">
+                                <i class="fas fa-stopwatch"></i>
+                            </div>
+                            <div class="metric-value">&lt;2s</div>
+                            <div class="metric-label">Response Time</div>
+                            <div class="metric-description">Average prediction processing time</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Usage Guidelines -->
+            <div class="row g-4 mb-5">
+                <div class="col-lg-6">
+                    <div class="glass-card h-100">
+                        <h5 class="fw-semibold mb-4 text-success">
+                            <i class="fas fa-check-circle me-2"></i>
+                            Best Practices
+                        </h5>
+                        <div class="guideline-list">
+                            <div class="guideline-item success">
+                                <i class="fas fa-camera"></i>
+                                <span>Use clear, well-lit photographs</span>
+                            </div>
+                            <div class="guideline-item success">
+                                <i class="fas fa-expand-arrows-alt"></i>
+                                <span>Ensure the fish fills most of the frame</span>
+                            </div>
+                            <div class="guideline-item success">
+                                <i class="fas fa-eye"></i>
+                                <span>Show distinctive features clearly</span>
+                            </div>
+                            <div class="guideline-item success">
+                                <i class="fas fa-user"></i>
+                                <span>One fish per image works best</span>
+                            </div>
+                            <div class="guideline-item success">
+                                <i class="fas fa-image"></i>
+                                <span>Avoid blurry or low-resolution images</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="glass-card h-100">
+                        <h5 class="fw-semibold mb-4 text-warning">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            Limitations
+                        </h5>
+                        <div class="guideline-list">
+                            <div class="guideline-item warning">
+                                <i class="fas fa-list"></i>
+                                <span>Limited to {{ model_info.num_classes if model_info else '11' }} trained species</span>
+                            </div>
+                            <div class="guideline-item warning">
+                                <i class="fas fa-image"></i>
+                                <span>Performance varies with image quality</span>
+                            </div>
+                            <div class="guideline-item warning">
+                                <i class="fas fa-sun"></i>
+                                <span>Unusual lighting may affect accuracy</span>
+                            </div>
+                            <div class="guideline-item warning">
+                                <i class="fas fa-baby"></i>
+                                <span>Young fish may be harder to classify</span>
+                            </div>
+                            <div class="guideline-item warning">
+                                <i class="fas fa-user-md"></i>
+                                <span>Verify with experts for scientific use</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="text-center">
+                <a href="{{ url_for('index') }}" class="btn btn-modern btn-lg">
+                    <i class="fas fa-fish me-2"></i>
+                    Start Fish Classification
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hero-icon {
+        width: 80px;
+        height: 80px;
+        background: var(--gradient-1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        font-size: 2rem;
+        color: white;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .gradient-text {
+        background: var(--gradient-1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .feature-list, .tech-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .feature-item, .tech-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background: var(--glass-light);
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        transition: all 0.3s ease;
+    }
+
+    .feature-item:hover, .tech-item:hover {
+        transform: translateX(5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-icon, .tech-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.1rem;
+    }
+
+    .feature-icon {
+        background: var(--gradient-1);
+    }
+
+    .tech-icon.python { background: #3776ab; }
+    .tech-icon.pytorch { background: #ee4c2c; }
+    .tech-icon.flask { background: #000000; }
+    .tech-icon.bootstrap { background: #7952b3; }
+
+    .feature-card {
+        padding: 2rem 1.5rem;
+        background: var(--glass);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .feature-card-icon {
+        width: 60px;
+        height: 60px;
+        background: var(--gradient-1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 1.5rem;
+        color: white;
+    }
+
+    .species-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: center;
+    }
+
+    .process-timeline {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .process-step {
+        text-align: center;
+        position: relative;
+    }
+
+    .process-number {
+        width: 50px;
+        height: 50px;
+        background: var(--gradient-1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: white;
+    }
+
+    .process-icon {
+        width: 40px;
+        height: 40px;
+        background: var(--glass);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        color: var(--primary);
+    }
+
+    .metric-card {
+        text-align: center;
+        padding: 2rem 1.5rem;
+        background: var(--glass);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .metric-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .metric-card.success { border-color: var(--success); }
+    .metric-card.primary { border-color: var(--primary); }
+    .metric-card.info { border-color: var(--info); }
+
+    .metric-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 1.5rem;
+        color: white;
+    }
+
+    .metric-card.success .metric-icon { background: var(--success); }
+    .metric-card.primary .metric-icon { background: var(--primary); }
+    .metric-card.info .metric-icon { background: var(--info); }
+
+    .metric-value {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .metric-label {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .metric-description {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+    }
+
+    .guideline-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .guideline-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background: var(--glass-light);
+        border-radius: 8px;
+        border-left: 4px solid;
+    }
+
+    .guideline-item.success {
+        border-left-color: var(--success);
+    }
+
+    .guideline-item.warning {
+        border-left-color: var(--warning);
+    }
+
+    .guideline-item i {
+        width: 20px;
+        text-align: center;
+    }
+
+    .guideline-item.success i {
+        color: var(--success);
+    }
+
+    .guideline-item.warning i {
+        color: var(--warning);
+    }
+</style>
+{% endblock %}
