@@ -12,7 +12,7 @@ Features:
 - Modern responsive UI with dark theme
 - Error handling and validation
 
-Author: Your Name
+Author: Tarang Kishor
 Date: 2025
 """
 
