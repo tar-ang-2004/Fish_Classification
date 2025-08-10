@@ -86,6 +86,7 @@ P4/
 ├── model_info.json          # Model metadata (generated)
 ├── fish_classifier_model.pth # Trained PyTorch model (generated)
 └── README.md                # This file
+```
 
 ## 🐠 Supported Fish Species
 
